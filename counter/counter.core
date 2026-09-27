@@ -1,0 +1,70 @@
+CAPI=2:
+name: socet:digital-lib:counter:0.0.1
+description: Simple counter 
+
+filesets:
+    rtl:
+        files:
+            - src/socetlib_counter.sv
+        file_type: systemVerilogSource
+
+    tb:
+        files:
+            - tb/tb_socetlib_counter.sv
+        file_type: systemVerilogSource
+
+targets:
+    default: &default
+        filesets:
+            - rtl
+        toplevel: socetlib_counter
+        # No parameters?
+    
+    sim:
+        <<: *default
+        description: Simulate w/TB
+        default_tool: verilator
+        filesets_append:
+            - tb
+        toplevel: tb_socetlib_counter
+        tools:
+            verilator:
+                verilator_options:
+                    - --binary
+                    - --timing
+                    - --trace-fst
+                    - --trace-structs
+                    - --coverage
+                    - -Wno-WIDTHEXPAND
+                make_options:
+                    - -j
+            vcs:
+                vcs_options:
+                    - -assert svaext
+                    - -debug_access+pp
+                    - -debug_access+all
+                    - -debug_pp +vcd+vcdpluson
+            modelsim:
+                vsim_options:
+                    - -vopt
+                    - -voptargs='+acc'
+                    - -t ps
+
+    gui:
+        <<: *default
+        description: Simulate TB with GUI
+        default_tool: xcelium
+        filesets_append:
+            - tb
+        toplevel: tb_socetlib_counter
+        tools:
+            xcelium:
+                xrun_options:
+                    - -gui
+                    - -access +rwc
+    lint:
+        <<: *default
+        filesets_append:
+            - tb
+        description: Linting
+        default_tool: veriblelint
