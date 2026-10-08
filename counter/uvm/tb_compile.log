@@ -1,0 +1,14 @@
+QuestaSim-64 vlog 2021.4 Compiler 2021.10 Oct 13 2021
+Start time: 15:18:02 on Oct 08,2026
+vlog "+acc" "+cover" "+incdir+." "+incdir+../src" tb_counter.sv -logfile tb_compile.log -printinfilenames=file_search.log 
+** Note: (vlog-2286) test.svh(2): Using implicit +incdir+/package/eda/mg/questa2021.4/questasim/uvm-1.1d/../verilog_src/uvm-1.1d/src from import uvm_pkg
+-- Compiling package tb_counter_sv_unit
+-- Importing package mtiUvm.uvm_pkg (uvm-1.1d Built-in)
+-- Compiling module socetlib_counter
+-- Compiling interface counter_if
+-- Compiling module tb_counter
+
+Top level modules:
+	tb_counter
+End time: 15:18:03 on Oct 08,2026, Elapsed time: 0:00:01
+Errors: 0, Warnings: 0

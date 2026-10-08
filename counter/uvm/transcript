@@ -1,0 +1,81 @@
+# vsim -c tb_counter -voptargs="+acc" -coverage "+UVM_TESTNAME=test" "+UVM_VERBOSITY=UVM_MEDIUM" -do "run -all" 
+# Start time: 15:18:04 on Oct 08,2026
+# ** Note: (vsim-3812) Design is being optimized...
+# //  Questa Sim-64
+# //  Version 2021.4 linux_x86_64 Oct 13 2021
+# //
+# //  Copyright 1991-2021 Mentor Graphics Corporation
+# //  All Rights Reserved.
+# //
+# //  QuestaSim and its associated documentation contain trade
+# //  secrets and commercial or financial information that are the property of
+# //  Mentor Graphics Corporation and are privileged, confidential,
+# //  and exempt from disclosure under the Freedom of Information Act,
+# //  5 U.S.C. Section 552. Furthermore, this information
+# //  is prohibited from disclosure under the Trade Secrets Act,
+# //  18 U.S.C. Section 1905.
+# //
+# Loading sv_std.std
+# Loading mtiUvm.uvm_pkg(fast)
+# Loading work.tb_counter_sv_unit(fast)
+# Loading mtiUvm.questa_uvm_pkg(fast)
+# Loading work.tb_counter(fast)
+# Loading work.counter_if(fast__2)
+# Loading work.socetlib_counter(fast)
+# Loading work.counter_if(fast)
+# Loading /package/eda/mg/questa2021.4/questasim/uvm-1.1d/linux_x86_64/uvm_dpi.so
+# run -all
+# ----------------------------------------------------------------
+# UVM-1.1d
+# (C) 2007-2013 Mentor Graphics Corporation
+# (C) 2007-2013 Cadence Design Systems, Inc.
+# (C) 2006-2013 Synopsys, Inc.
+# (C) 2011-2013 Cypress Semiconductor Corp.
+# ----------------------------------------------------------------
+# 
+#   ***********       IMPORTANT RELEASE NOTES         ************
+# 
+#   You are using a version of the UVM library that has been compiled
+#   with `UVM_NO_DEPRECATED undefined.
+#   See http://www.eda.org/svdb/view.php?id=3313 for more details.
+# 
+#   You are using a version of the UVM library that has been compiled
+#   with `UVM_OBJECT_MUST_HAVE_CONSTRUCTOR undefined.
+#   See http://www.eda.org/svdb/view.php?id=3770 for more details.
+# 
+#       (Specify +UVM_NO_RELNOTES to turn off this notice)
+# 
+# UVM_INFO verilog_src/questa_uvm_pkg-1.2/src/questa_uvm_pkg.sv(277) @ 0: reporter [Questa UVM] QUESTA_UVM-1.2.3
+# UVM_INFO verilog_src/questa_uvm_pkg-1.2/src/questa_uvm_pkg.sv(278) @ 0: reporter [Questa UVM]  questa_uvm::init(+struct)
+# UVM_INFO @ 0: reporter [RNTST] Running test test...
+# UVM_INFO test.svh(40) @ 0: uvm_test_top [Test] Starting Basic Counting test
+# UVM_INFO scoreboard.svh(40) @ 4000: uvm_test_top.env.sb [Scoreboard] PASS: expected count = 0, actual count = 0
+# UVM_INFO scoreboard.svh(40) @ 6000: uvm_test_top.env.sb [Scoreboard] PASS: expected count = 1, actual count = 1
+# UVM_INFO scoreboard.svh(40) @ 8000: uvm_test_top.env.sb [Scoreboard] PASS: expected count = 2, actual count = 2
+# UVM_INFO scoreboard.svh(40) @ 10000: uvm_test_top.env.sb [Scoreboard] PASS: expected count = 3, actual count = 3
+# UVM_INFO scoreboard.svh(40) @ 12000: uvm_test_top.env.sb [Scoreboard] PASS: expected count = 4, actual count = 4
+# UVM_INFO scoreboard.svh(40) @ 14000: uvm_test_top.env.sb [Scoreboard] PASS: expected count = 5, actual count = 5
+# UVM_INFO scoreboard.svh(40) @ 16000: uvm_test_top.env.sb [Scoreboard] PASS: expected count = 6, actual count = 6
+# UVM_INFO scoreboard.svh(40) @ 18000: uvm_test_top.env.sb [Scoreboard] PASS: expected count = 7, actual count = 7
+# UVM_INFO scoreboard.svh(40) @ 20000: uvm_test_top.env.sb [Scoreboard] PASS: expected count = 8, actual count = 8
+# UVM_INFO scoreboard.svh(40) @ 22000: uvm_test_top.env.sb [Scoreboard] PASS: expected count = 9, actual count = 9
+# UVM_INFO verilog_src/uvm-1.1d/src/base/uvm_objection.svh(1267) @ 23100: reporter [TEST_DONE] 'run' phase is ready to proceed to the 'extract' phase
+# UVM_INFO scoreboard.svh(67) @ 23100: uvm_test_top.env.sb [Scoreboard] Matches: 10, Mismatches: 0
+# 
+# --- UVM Report Summary ---
+# 
+# ** Report counts by severity
+# UVM_INFO :   16
+# UVM_WARNING :    0
+# UVM_ERROR :    0
+# UVM_FATAL :    0
+# ** Report counts by id
+# [Questa UVM]     2
+# [RNTST]     1
+# [Scoreboard]    11
+# [TEST_DONE]     1
+# [Test]     1
+# ** Note: $finish    : /package/eda/mg/questa2021.4/questasim/linux_x86_64/../verilog_src/uvm-1.1d/src/base/uvm_root.svh(430)
+#    Time: 231 ns  Iteration: 54  Instance: /tb_counter
+# End time: 15:18:08 on Oct 08,2026, Elapsed time: 0:00:04
+# Errors: 0, Warnings: 0
