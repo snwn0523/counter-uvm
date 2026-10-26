@@ -34,19 +34,17 @@ class monitor extends uvm_monitor;
             // sample after the DUT updates at the positive clock edge
             @(negedge vif.clk);
 
-            if (vif.nRST == 1'b1) begin
+            tx = transaction#(4)::type_id::create("tx");
 
-                tx = transaction#(4)::type_id::create("tx");
+            tx.nRST = vif.nRST;
+            tx.clear = vif.clear;
+            tx.count_enable = vif.count_enable;
+            tx.overflow_val = vif.overflow_val;
 
-                tx.clear = vif.clear;
-                tx.count_enable = vif.count_enable;
-                tx.overflow_val = vif.overflow_val;
+            tx.count_out = vif.count_out;
+            tx.overflow_flag = vif.overflow_flag;
 
-                tx.count_out = vif.count_out;
-                tx.overflow_flag = vif.overflow_flag;
-
-                result_ap.write(tx);
-            end
+            result_ap.write(tx);
         end
 
     endtask: run_phase

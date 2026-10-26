@@ -1,5 +1,5 @@
 # vsim -c tb_counter -voptargs="+acc" -coverage "+UVM_TESTNAME=test" "+UVM_VERBOSITY=UVM_MEDIUM" -do "run -all" 
-# Start time: 15:18:04 on Oct 08,2026
+# Start time: 23:35:46 on Oct 25,2026
 # ** Note: (vsim-3812) Design is being optimized...
 # //  Questa Sim-64
 # //  Version 2021.4 linux_x86_64 Oct 13 2021
@@ -49,33 +49,36 @@
 # UVM_INFO verilog_src/questa_uvm_pkg-1.2/src/questa_uvm_pkg.sv(278) @ 0: reporter [Questa UVM]  questa_uvm::init(+struct)
 # UVM_INFO @ 0: reporter [RNTST] Running test test...
 # UVM_INFO test.svh(40) @ 0: uvm_test_top [Test] Starting Basic Counting test
-# UVM_INFO scoreboard.svh(40) @ 4000: uvm_test_top.env.sb [Scoreboard] PASS: expected count = 0, actual count = 0
-# UVM_INFO scoreboard.svh(40) @ 6000: uvm_test_top.env.sb [Scoreboard] PASS: expected count = 1, actual count = 1
-# UVM_INFO scoreboard.svh(40) @ 8000: uvm_test_top.env.sb [Scoreboard] PASS: expected count = 2, actual count = 2
-# UVM_INFO scoreboard.svh(40) @ 10000: uvm_test_top.env.sb [Scoreboard] PASS: expected count = 3, actual count = 3
-# UVM_INFO scoreboard.svh(40) @ 12000: uvm_test_top.env.sb [Scoreboard] PASS: expected count = 4, actual count = 4
-# UVM_INFO scoreboard.svh(40) @ 14000: uvm_test_top.env.sb [Scoreboard] PASS: expected count = 5, actual count = 5
-# UVM_INFO scoreboard.svh(40) @ 16000: uvm_test_top.env.sb [Scoreboard] PASS: expected count = 6, actual count = 6
-# UVM_INFO scoreboard.svh(40) @ 18000: uvm_test_top.env.sb [Scoreboard] PASS: expected count = 7, actual count = 7
-# UVM_INFO scoreboard.svh(40) @ 20000: uvm_test_top.env.sb [Scoreboard] PASS: expected count = 8, actual count = 8
-# UVM_INFO scoreboard.svh(40) @ 22000: uvm_test_top.env.sb [Scoreboard] PASS: expected count = 9, actual count = 9
-# UVM_INFO verilog_src/uvm-1.1d/src/base/uvm_objection.svh(1267) @ 23100: reporter [TEST_DONE] 'run' phase is ready to proceed to the 'extract' phase
-# UVM_INFO scoreboard.svh(67) @ 23100: uvm_test_top.env.sb [Scoreboard] Matches: 10, Mismatches: 0
+# UVM_INFO scoreboard.svh(36) @ 2000: uvm_test_top.env.sb [Scoreboard] PASS: nRST=0 clear=0 enable=0 expected=0 actual=0
+# UVM_INFO scoreboard.svh(36) @ 4000: uvm_test_top.env.sb [Scoreboard] PASS: nRST=0 clear=0 enable=0 expected=0 actual=0
+# UVM_INFO scoreboard.svh(36) @ 6000: uvm_test_top.env.sb [Scoreboard] PASS: nRST=1 clear=0 enable=0 expected=0 actual=0
+# UVM_INFO scoreboard.svh(36) @ 8000: uvm_test_top.env.sb [Scoreboard] PASS: nRST=1 clear=0 enable=1 expected=0 actual=0
+# UVM_INFO scoreboard.svh(36) @ 10000: uvm_test_top.env.sb [Scoreboard] PASS: nRST=1 clear=0 enable=1 expected=1 actual=1
+# UVM_INFO scoreboard.svh(36) @ 12000: uvm_test_top.env.sb [Scoreboard] PASS: nRST=1 clear=0 enable=1 expected=2 actual=2
+# UVM_INFO scoreboard.svh(36) @ 14000: uvm_test_top.env.sb [Scoreboard] PASS: nRST=1 clear=0 enable=1 expected=3 actual=3
+# UVM_INFO scoreboard.svh(36) @ 16000: uvm_test_top.env.sb [Scoreboard] PASS: nRST=1 clear=0 enable=1 expected=4 actual=4
+# UVM_INFO scoreboard.svh(36) @ 18000: uvm_test_top.env.sb [Scoreboard] PASS: nRST=1 clear=0 enable=0 expected=5 actual=5
+# UVM_INFO scoreboard.svh(36) @ 20000: uvm_test_top.env.sb [Scoreboard] PASS: nRST=1 clear=0 enable=0 expected=5 actual=5
+# UVM_INFO scoreboard.svh(36) @ 22000: uvm_test_top.env.sb [Scoreboard] PASS: nRST=1 clear=0 enable=0 expected=5 actual=5
+# UVM_INFO scoreboard.svh(36) @ 24000: uvm_test_top.env.sb [Scoreboard] PASS: nRST=1 clear=1 enable=0 expected=5 actual=5
+# UVM_INFO scoreboard.svh(36) @ 26000: uvm_test_top.env.sb [Scoreboard] PASS: nRST=1 clear=0 enable=0 expected=0 actual=0
+# UVM_INFO verilog_src/uvm-1.1d/src/base/uvm_objection.svh(1267) @ 27100: reporter [TEST_DONE] 'run' phase is ready to proceed to the 'extract' phase
+# UVM_INFO scoreboard.svh(84) @ 27100: uvm_test_top.env.sb [Scoreboard] Matches: 13, Mismatches: 0
 # 
 # --- UVM Report Summary ---
 # 
 # ** Report counts by severity
-# UVM_INFO :   16
+# UVM_INFO :   19
 # UVM_WARNING :    0
 # UVM_ERROR :    0
 # UVM_FATAL :    0
 # ** Report counts by id
 # [Questa UVM]     2
 # [RNTST]     1
-# [Scoreboard]    11
+# [Scoreboard]    14
 # [TEST_DONE]     1
 # [Test]     1
 # ** Note: $finish    : /package/eda/mg/questa2021.4/questasim/linux_x86_64/../verilog_src/uvm-1.1d/src/base/uvm_root.svh(430)
-#    Time: 231 ns  Iteration: 54  Instance: /tb_counter
-# End time: 15:18:08 on Oct 08,2026, Elapsed time: 0:00:04
+#    Time: 271 ns  Iteration: 54  Instance: /tb_counter
+# End time: 23:35:50 on Oct 25,2026, Elapsed time: 0:00:04
 # Errors: 0, Warnings: 0

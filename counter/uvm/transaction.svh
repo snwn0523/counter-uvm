@@ -8,6 +8,7 @@ import uvm_pkg::*;
 class transaction #(parameter NUM_BITS = 4) extends uvm_sequence_item;
 
     // input fields driven to the DUT
+    rand bit nRST;
     rand bit clear;
     rand bit count_enable;
     rand bit [NUM_BITS-1:0] overflow_val;
@@ -17,6 +18,7 @@ class transaction #(parameter NUM_BITS = 4) extends uvm_sequence_item;
 
     // register transaction fields with the UVM factory
     `uvm_object_utils_begin(transaction)
+        `uvm_field_int(nRST, UVM_NOCOMPARE)
         `uvm_field_int(clear, UVM_NOCOMPARE)
         `uvm_field_int(count_enable, UVM_NOCOMPARE)
         `uvm_field_int(overflow_val, UVM_NOCOMPARE)

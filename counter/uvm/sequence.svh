@@ -15,17 +15,60 @@ class counter_sequence extends uvm_sequence#(transaction);
 
         // create a transaction object
         req_item = transaction#(4)::type_id::create("req_item");
-
-        // basic counting test: count for 10 cycles
-        repeat(10) begin
-        start_item(req_item);
-
-        req_item.clear = 0;
-        req_item.count_enable = 1;
-        req_item.overflow_val = 4'd15;
-
-        finish_item(req_item);
+        
+        // 1.1 Reset Behavior
+        repeat(2) begin
+            start_item(req_item);
+            req_item.nRST = 0;
+            req_item.clear = 0;
+            req_item.count_enable = 0;
+            req_item.overflow_val = 4'd15;
+            finish_item(req_item);
         end
+
+        // Release reset
+        start_item(req_item);
+        req_item.nRST = 1;
+        req_item.clear = 0;
+        req_item.count_enable = 0;
+        req_item.overflow_val = 4'd15;
+        finish_item(req_item);
+
+        // 2.1 Basic Counting
+        repeat(5) begin
+            start_item(req_item);
+            req_item.nRST = 1;
+            req_item.clear = 0;
+            req_item.count_enable = 1;
+            req_item.overflow_val = 4'd15;
+            finish_item(req_item);
+        end
+
+        // 2.2 Count Hold
+        repeat(3) begin
+            start_item(req_item);
+            req_item.nRST = 1;
+            req_item.clear = 0;
+            req_item.count_enable = 0;
+            req_item.overflow_val = 4'd15;
+            finish_item(req_item);
+        end
+
+        // 3.1 Synchronus Clear
+            start_item(req_item);
+            req_item.nRST = 1;
+            req_item.clear = 1;
+            req_item.count_enable = 0;
+            req_item.overflow_val = 4'd15;
+            finish_item(req_item);
+
+        // Verify clear output on the following cycle
+            start_item(req_item);
+            req_item.nRST = 1;
+            req_item.clear = 0;
+            req_item.count_enable = 0;
+            req_item.overflow_val = 4'd15;
+            finish_item(req_item);
     endtask: body
 
 endclass: counter_sequence

@@ -9,6 +9,7 @@ class scoreboard extends uvm_scoreboard;
     uvm_analysis_imp#(transaction, scoreboard) analysis_export;
 
     bit [3:0] expected_count;
+    bit expected_overflow;
     int m_matches;
     int m_mismatches;
 
@@ -28,37 +29,53 @@ class scoreboard extends uvm_scoreboard;
 
     // compare the expected count with the DUT output
     function void write(transaction tx);
-
-        // basic counting test only
-        if (tx.count_enable && !tx.clear)
-        expected_count = expected_count + 1;
-
         if (tx.count_out == expected_count) begin
 
-        m_matches++;
+            m_matches++;
 
-        `uvm_info(
-            "Scoreboard",
-            $sformatf(
-            "PASS: expected count = %0d, actual count = %0d",
-            expected_count,
-            tx.count_out
-            ),
-            UVM_LOW
-        )
+            `uvm_info(
+                "Scoreboard",
+                $sformatf(
+                "PASS: nRST=%b clear=%b enable=%b expected=%0d actual=%0d",
+                tx.nRST,
+                tx.clear,
+                tx.count_enable,
+                expected_count,
+                tx.count_out
+                ),
+                UVM_LOW
+            )
         end
         else begin
 
-        m_mismatches++;
+            m_mismatches++;
 
-        `uvm_error(
-            "Scoreboard",
-            $sformatf(
-            "FAIL: expected count = %0d, actual count = %0d",
-            expected_count,
-            tx.count_out
+            `uvm_error(
+                "Scoreboard",
+                $sformatf(
+                "FAIL: nRST=%b clear=%b enable=%b expected=%0d actual=%0d",
+                tx.nRST,
+                tx.clear,
+                tx.count_enable,
+                expected_count,
+                tx.count_out
+                )
             )
-        )
+        end
+        
+        // Reset behavior
+        if (!tx.nRST) begin
+            expected_count = 0;
+            expected_overflow = 0;
+        end
+        // Synchronous clear
+        else if (tx.clear) begin
+            expected_count = 0;
+            expected_overflow = 0;
+        end
+        // basic counting
+        else if (tx.count_enable) begin
+            expected_count = expected_count + 1;
         end
 
     endfunction: write

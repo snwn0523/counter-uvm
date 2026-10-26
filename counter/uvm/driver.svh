@@ -27,17 +27,19 @@ class driver extends uvm_driver#(transaction);
     task run_phase(uvm_phase phase);
         transaction req_item;
 
-        // reset
-        vif.nRST = 0;
-        @(posedge vif.clk);
-        @(posedge vif.clk);
-        vif.nRST = 1;
-        @(negedge vif.clk);
+        //Inital values
+        vif.nRST = 1'b1;
+        vif.clear = 1'b0;
+        vif.count_enable = 1'b0;
+        vif.overflow_val = '0;
 
         forever begin
             seq_item_port.get_next_item(req_item);
 
+            @(negedge vif.clk);
+
             // drive basic counting inputs
+            vif.nRST = req_item.nRST;
             vif.clear = req_item.clear;
             vif.count_enable = req_item.count_enable;
             vif.overflow_val = req_item.overflow_val;
