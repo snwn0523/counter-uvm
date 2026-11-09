@@ -1,5 +1,5 @@
-# vsim -c tb_counter -voptargs="+acc" -coverage "+UVM_TESTNAME=test" "+UVM_VERBOSITY=UVM_MEDIUM" -do "run -all" 
-# Start time: 23:35:46 on Oct 25,2026
+# vsim -c tb_counter -voptargs="+acc" -coverage "+UVM_TESTNAME=test" "+UVM_VERBOSITY=UVM_MEDIUM" -do "run -all; quit -f" 
+# Start time: 19:27:14 on Nov 08,2026
 # ** Note: (vsim-3812) Design is being optimized...
 # //  Questa Sim-64
 # //  Version 2021.4 linux_x86_64 Oct 13 2021
@@ -48,37 +48,78 @@
 # UVM_INFO verilog_src/questa_uvm_pkg-1.2/src/questa_uvm_pkg.sv(277) @ 0: reporter [Questa UVM] QUESTA_UVM-1.2.3
 # UVM_INFO verilog_src/questa_uvm_pkg-1.2/src/questa_uvm_pkg.sv(278) @ 0: reporter [Questa UVM]  questa_uvm::init(+struct)
 # UVM_INFO @ 0: reporter [RNTST] Running test test...
-# UVM_INFO test.svh(40) @ 0: uvm_test_top [Test] Starting Basic Counting test
-# UVM_INFO scoreboard.svh(36) @ 2000: uvm_test_top.env.sb [Scoreboard] PASS: nRST=0 clear=0 enable=0 expected=0 actual=0
-# UVM_INFO scoreboard.svh(36) @ 4000: uvm_test_top.env.sb [Scoreboard] PASS: nRST=0 clear=0 enable=0 expected=0 actual=0
-# UVM_INFO scoreboard.svh(36) @ 6000: uvm_test_top.env.sb [Scoreboard] PASS: nRST=1 clear=0 enable=0 expected=0 actual=0
-# UVM_INFO scoreboard.svh(36) @ 8000: uvm_test_top.env.sb [Scoreboard] PASS: nRST=1 clear=0 enable=1 expected=0 actual=0
-# UVM_INFO scoreboard.svh(36) @ 10000: uvm_test_top.env.sb [Scoreboard] PASS: nRST=1 clear=0 enable=1 expected=1 actual=1
-# UVM_INFO scoreboard.svh(36) @ 12000: uvm_test_top.env.sb [Scoreboard] PASS: nRST=1 clear=0 enable=1 expected=2 actual=2
-# UVM_INFO scoreboard.svh(36) @ 14000: uvm_test_top.env.sb [Scoreboard] PASS: nRST=1 clear=0 enable=1 expected=3 actual=3
-# UVM_INFO scoreboard.svh(36) @ 16000: uvm_test_top.env.sb [Scoreboard] PASS: nRST=1 clear=0 enable=1 expected=4 actual=4
-# UVM_INFO scoreboard.svh(36) @ 18000: uvm_test_top.env.sb [Scoreboard] PASS: nRST=1 clear=0 enable=0 expected=5 actual=5
-# UVM_INFO scoreboard.svh(36) @ 20000: uvm_test_top.env.sb [Scoreboard] PASS: nRST=1 clear=0 enable=0 expected=5 actual=5
-# UVM_INFO scoreboard.svh(36) @ 22000: uvm_test_top.env.sb [Scoreboard] PASS: nRST=1 clear=0 enable=0 expected=5 actual=5
-# UVM_INFO scoreboard.svh(36) @ 24000: uvm_test_top.env.sb [Scoreboard] PASS: nRST=1 clear=1 enable=0 expected=5 actual=5
-# UVM_INFO scoreboard.svh(36) @ 26000: uvm_test_top.env.sb [Scoreboard] PASS: nRST=1 clear=0 enable=0 expected=0 actual=0
-# UVM_INFO verilog_src/uvm-1.1d/src/base/uvm_objection.svh(1267) @ 27100: reporter [TEST_DONE] 'run' phase is ready to proceed to the 'extract' phase
-# UVM_INFO scoreboard.svh(84) @ 27100: uvm_test_top.env.sb [Scoreboard] Matches: 13, Mismatches: 0
+# UVM_INFO test.svh(40) @ 0: uvm_test_top [Test] Starting Randomized Counter test
+# UVM_INFO scoreboard.svh(62) @ 1100: uvm_test_top.env.sb [Scoreboard] PASS: count expected=0 actual=0 | overflow expected=0 actual=0
+# UVM_INFO scoreboard.svh(62) @ 3100: uvm_test_top.env.sb [Scoreboard] PASS: count expected=0 actual=0 | overflow expected=0 actual=0
+# UVM_INFO sequence.svh(25) @ 4000: uvm_test_top.env.agt.sqr@@seq [Sequence] nRST=1 clear=0 enable=1 overflow_val=9
+# UVM_INFO scoreboard.svh(62) @ 5100: uvm_test_top.env.sb [Scoreboard] PASS: count expected=0 actual=0 | overflow expected=0 actual=0
+# UVM_INFO sequence.svh(25) @ 7000: uvm_test_top.env.agt.sqr@@seq [Sequence] nRST=1 clear=0 enable=1 overflow_val=8
+# UVM_INFO scoreboard.svh(62) @ 7100: uvm_test_top.env.sb [Scoreboard] PASS: count expected=1 actual=1 | overflow expected=0 actual=0
+# UVM_INFO sequence.svh(25) @ 9000: uvm_test_top.env.agt.sqr@@seq [Sequence] nRST=1 clear=0 enable=1 overflow_val=13
+# UVM_INFO scoreboard.svh(62) @ 9100: uvm_test_top.env.sb [Scoreboard] PASS: count expected=2 actual=2 | overflow expected=0 actual=0
+# UVM_INFO sequence.svh(25) @ 11000: uvm_test_top.env.agt.sqr@@seq [Sequence] nRST=1 clear=0 enable=1 overflow_val=11
+# UVM_INFO scoreboard.svh(62) @ 11100: uvm_test_top.env.sb [Scoreboard] PASS: count expected=3 actual=3 | overflow expected=0 actual=0
+# UVM_INFO sequence.svh(25) @ 13000: uvm_test_top.env.agt.sqr@@seq [Sequence] nRST=1 clear=0 enable=1 overflow_val=6
+# UVM_INFO scoreboard.svh(62) @ 13100: uvm_test_top.env.sb [Scoreboard] PASS: count expected=4 actual=4 | overflow expected=0 actual=0
+# UVM_INFO sequence.svh(25) @ 15000: uvm_test_top.env.agt.sqr@@seq [Sequence] nRST=1 clear=0 enable=1 overflow_val=7
+# UVM_INFO scoreboard.svh(62) @ 15100: uvm_test_top.env.sb [Scoreboard] PASS: count expected=5 actual=5 | overflow expected=0 actual=0
+# UVM_INFO sequence.svh(25) @ 17000: uvm_test_top.env.agt.sqr@@seq [Sequence] nRST=1 clear=0 enable=1 overflow_val=9
+# UVM_INFO scoreboard.svh(62) @ 17100: uvm_test_top.env.sb [Scoreboard] PASS: count expected=6 actual=6 | overflow expected=0 actual=0
+# UVM_INFO sequence.svh(25) @ 19000: uvm_test_top.env.agt.sqr@@seq [Sequence] nRST=1 clear=0 enable=1 overflow_val=1
+# UVM_INFO scoreboard.svh(62) @ 19100: uvm_test_top.env.sb [Scoreboard] PASS: count expected=7 actual=7 | overflow expected=0 actual=0
+# UVM_INFO sequence.svh(25) @ 21000: uvm_test_top.env.agt.sqr@@seq [Sequence] nRST=1 clear=0 enable=1 overflow_val=2
+# UVM_INFO scoreboard.svh(62) @ 21100: uvm_test_top.env.sb [Scoreboard] PASS: count expected=1 actual=1 | overflow expected=1 actual=1
+# UVM_INFO sequence.svh(25) @ 23000: uvm_test_top.env.agt.sqr@@seq [Sequence] nRST=1 clear=0 enable=1 overflow_val=9
+# UVM_INFO scoreboard.svh(62) @ 23100: uvm_test_top.env.sb [Scoreboard] PASS: count expected=2 actual=2 | overflow expected=1 actual=1
+# UVM_INFO sequence.svh(25) @ 25000: uvm_test_top.env.agt.sqr@@seq [Sequence] nRST=1 clear=1 enable=1 overflow_val=15
+# UVM_INFO scoreboard.svh(62) @ 25100: uvm_test_top.env.sb [Scoreboard] PASS: count expected=3 actual=3 | overflow expected=0 actual=0
+# UVM_INFO sequence.svh(25) @ 27000: uvm_test_top.env.agt.sqr@@seq [Sequence] nRST=1 clear=0 enable=1 overflow_val=9
+# UVM_INFO scoreboard.svh(62) @ 27100: uvm_test_top.env.sb [Scoreboard] PASS: count expected=0 actual=0 | overflow expected=0 actual=0
+# UVM_INFO sequence.svh(25) @ 29000: uvm_test_top.env.agt.sqr@@seq [Sequence] nRST=1 clear=0 enable=1 overflow_val=4
+# UVM_INFO scoreboard.svh(62) @ 29100: uvm_test_top.env.sb [Scoreboard] PASS: count expected=1 actual=1 | overflow expected=0 actual=0
+# UVM_INFO sequence.svh(25) @ 31000: uvm_test_top.env.agt.sqr@@seq [Sequence] nRST=1 clear=0 enable=0 overflow_val=12
+# UVM_INFO scoreboard.svh(62) @ 31100: uvm_test_top.env.sb [Scoreboard] PASS: count expected=2 actual=2 | overflow expected=0 actual=0
+# UVM_INFO sequence.svh(25) @ 33000: uvm_test_top.env.agt.sqr@@seq [Sequence] nRST=1 clear=1 enable=1 overflow_val=3
+# UVM_INFO scoreboard.svh(62) @ 33100: uvm_test_top.env.sb [Scoreboard] PASS: count expected=2 actual=2 | overflow expected=0 actual=0
+# UVM_INFO sequence.svh(25) @ 35000: uvm_test_top.env.agt.sqr@@seq [Sequence] nRST=1 clear=0 enable=1 overflow_val=2
+# UVM_INFO scoreboard.svh(62) @ 35100: uvm_test_top.env.sb [Scoreboard] PASS: count expected=0 actual=0 | overflow expected=0 actual=0
+# UVM_INFO sequence.svh(25) @ 37000: uvm_test_top.env.agt.sqr@@seq [Sequence] nRST=1 clear=0 enable=1 overflow_val=1
+# UVM_INFO scoreboard.svh(62) @ 37100: uvm_test_top.env.sb [Scoreboard] PASS: count expected=1 actual=1 | overflow expected=0 actual=0
+# UVM_INFO sequence.svh(25) @ 39000: uvm_test_top.env.agt.sqr@@seq [Sequence] nRST=1 clear=0 enable=1 overflow_val=10
+# UVM_INFO scoreboard.svh(62) @ 39100: uvm_test_top.env.sb [Scoreboard] PASS: count expected=1 actual=1 | overflow expected=1 actual=1
+# UVM_INFO sequence.svh(25) @ 41000: uvm_test_top.env.agt.sqr@@seq [Sequence] nRST=1 clear=0 enable=1 overflow_val=3
+# UVM_INFO scoreboard.svh(62) @ 41100: uvm_test_top.env.sb [Scoreboard] PASS: count expected=2 actual=2 | overflow expected=0 actual=0
+# UVM_INFO sequence.svh(25) @ 43000: uvm_test_top.env.agt.sqr@@seq [Sequence] nRST=1 clear=0 enable=0 overflow_val=15
+# UVM_INFO scoreboard.svh(62) @ 43100: uvm_test_top.env.sb [Scoreboard] PASS: count expected=3 actual=3 | overflow expected=1 actual=1
+# UVM_INFO sequence.svh(25) @ 45000: uvm_test_top.env.agt.sqr@@seq [Sequence] nRST=1 clear=1 enable=1 overflow_val=15
+# UVM_INFO scoreboard.svh(62) @ 45100: uvm_test_top.env.sb [Scoreboard] PASS: count expected=3 actual=3 | overflow expected=0 actual=0
+# UVM_INFO sequence.svh(25) @ 47000: uvm_test_top.env.agt.sqr@@seq [Sequence] nRST=1 clear=0 enable=1 overflow_val=4
+# UVM_INFO scoreboard.svh(62) @ 47100: uvm_test_top.env.sb [Scoreboard] PASS: count expected=0 actual=0 | overflow expected=0 actual=0
+# UVM_INFO sequence.svh(25) @ 49000: uvm_test_top.env.agt.sqr@@seq [Sequence] nRST=1 clear=0 enable=1 overflow_val=9
+# UVM_INFO scoreboard.svh(62) @ 49100: uvm_test_top.env.sb [Scoreboard] PASS: count expected=1 actual=1 | overflow expected=0 actual=0
+# UVM_INFO sequence.svh(25) @ 51000: uvm_test_top.env.agt.sqr@@seq [Sequence] nRST=1 clear=0 enable=0 overflow_val=2
+# UVM_INFO scoreboard.svh(62) @ 51100: uvm_test_top.env.sb [Scoreboard] PASS: count expected=2 actual=2 | overflow expected=0 actual=0
+# UVM_INFO sequence.svh(25) @ 53000: uvm_test_top.env.agt.sqr@@seq [Sequence] nRST=1 clear=0 enable=0 overflow_val=6
+# UVM_INFO scoreboard.svh(62) @ 53100: uvm_test_top.env.sb [Scoreboard] PASS: count expected=2 actual=2 | overflow expected=1 actual=1
+# UVM_INFO scoreboard.svh(62) @ 55100: uvm_test_top.env.sb [Scoreboard] PASS: count expected=2 actual=2 | overflow expected=0 actual=0
+# UVM_INFO verilog_src/uvm-1.1d/src/base/uvm_objection.svh(1267) @ 56000: reporter [TEST_DONE] 'run' phase is ready to proceed to the 'extract' phase
+# UVM_INFO scoreboard.svh(110) @ 56000: uvm_test_top.env.sb [Scoreboard] Matches: 28, Mismatches: 0
 # 
 # --- UVM Report Summary ---
 # 
 # ** Report counts by severity
-# UVM_INFO :   19
+# UVM_INFO :   59
 # UVM_WARNING :    0
 # UVM_ERROR :    0
 # UVM_FATAL :    0
 # ** Report counts by id
 # [Questa UVM]     2
 # [RNTST]     1
-# [Scoreboard]    14
+# [Scoreboard]    29
+# [Sequence]    25
 # [TEST_DONE]     1
 # [Test]     1
 # ** Note: $finish    : /package/eda/mg/questa2021.4/questasim/linux_x86_64/../verilog_src/uvm-1.1d/src/base/uvm_root.svh(430)
-#    Time: 271 ns  Iteration: 54  Instance: /tb_counter
-# End time: 23:35:50 on Oct 25,2026, Elapsed time: 0:00:04
+#    Time: 560 ns  Iteration: 55  Instance: /tb_counter
+# End time: 19:27:18 on Nov 08,2026, Elapsed time: 0:00:04
 # Errors: 0, Warnings: 0
