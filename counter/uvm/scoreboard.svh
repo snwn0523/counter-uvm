@@ -17,6 +17,7 @@ class scoreboard extends uvm_scoreboard;
         super.new(name, parent);
 
         expected_count = 0;
+        expected_overflow = 0;
         m_matches = 0;
         m_mismatches = 0;
     endfunction: new
@@ -29,19 +30,43 @@ class scoreboard extends uvm_scoreboard;
 
     // compare the expected count with the DUT output
     function void write(transaction tx);
-        if (tx.count_out == expected_count) begin
+        // calculate expected output based on counter RTL
+        if (!tx.nRST) begin
+            expected_count = 0;
+            expected_overflow = 0;
+        end
+        else begin
+            // synchronous clear has priority
+            if (tx.clear) begin
+                expected_count = 0;
+            end
+            else if (tx.count_enable) begin
+                // rollover behavior
+                if ((int'(expected_count) + 1) > int'(tx.overflow_val)) begin
+                    expected_count = 1;
+                end
+                else begin
+                    expected_count = expected_count + 1;
+                end
+            end
+
+            // overflow flag follows the next count value
+            expected_overflow = (expected_count == tx.overflow_val);
+        end
+        
+        // compare expected and actual outputs
+        if ((tx.count_out == expected_count) && (tx.overflow_flag == expected_overflow)) begin
 
             m_matches++;
 
             `uvm_info(
                 "Scoreboard",
                 $sformatf(
-                "PASS: nRST=%b clear=%b enable=%b expected=%0d actual=%0d",
-                tx.nRST,
-                tx.clear,
-                tx.count_enable,
+                "PASS: count expected=%0d actual=%0d | overflow expected=%0b actual=%0b",
                 expected_count,
-                tx.count_out
+                tx.count_out,
+                expected_overflow,
+                tx.overflow_flag
                 ),
                 UVM_LOW
             )
@@ -53,34 +78,35 @@ class scoreboard extends uvm_scoreboard;
             `uvm_error(
                 "Scoreboard",
                 $sformatf(
-                "FAIL: nRST=%b clear=%b enable=%b expected=%0d actual=%0d",
-                tx.nRST,
-                tx.clear,
-                tx.count_enable,
+                "FAIL: count expected=%0d actual=%0d | overflow expected=%0b actual=%0b",
                 expected_count,
-                tx.count_out
+                tx.count_out,
+                expected_overflow,
+                tx.overflow_flag
                 )
             )
         end
         
-        // Reset behavior
-        if (!tx.nRST) begin
-            expected_count = 0;
-            expected_overflow = 0;
-        end
-        // Synchronous clear
-        else if (tx.clear) begin
-            expected_count = 0;
-            expected_overflow = 0;
-        end
-        // basic counting
-        else if (tx.count_enable) begin
-            expected_count = expected_count + 1;
-        end
+        // // Reset behavior
+        // if (!tx.nRST) begin
+        //     expected_count = 0;
+        //     expected_overflow = 0;
+        // end
+        // // Synchronous clear
+        // else if (tx.clear) begin
+        //     expected_count = 0;
+        //     expected_overflow = 0;
+        // end
+        // // basic counting
+        // else if (tx.count_enable) begin
+        //     expected_count = expected_count + 1;
+        // end
 
     endfunction: write
 
     function void report_phase(uvm_phase phase);
+        super.report_phase(phase);
+
         `uvm_info(
         "Scoreboard",
         $sformatf(

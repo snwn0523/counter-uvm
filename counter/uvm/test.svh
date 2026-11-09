@@ -2,7 +2,7 @@ import uvm_pkg::*;
 `include "uvm_macros.svh"
 `include "environment.svh"
 
-// test creates the environment and starts the basic counting sequence
+// test creates the environment and starts the ranodmized counter sequence
 class test extends uvm_test;
     `uvm_component_utils(test)
 
@@ -32,16 +32,16 @@ class test extends uvm_test;
 
     endfunction: build_phase
 
-    // start the basic counting sequence
+    // start the randomized counter sequence
     task run_phase(uvm_phase phase);
 
         phase.raise_objection(this);
 
-        `uvm_info("Test", "Starting Basic Counting test", UVM_LOW)
+        `uvm_info("Test", "Starting Randomized Counter test", UVM_LOW)
 
         seq.start(env.agt.sqr);
 
-        #1ns;
+        @(negedge vif.clk);
 
         phase.drop_objection(this);
 

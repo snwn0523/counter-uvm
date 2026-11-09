@@ -16,6 +16,14 @@ class transaction #(parameter NUM_BITS = 4) extends uvm_sequence_item;
     bit [NUM_BITS-1:0] count_out;
     bit overflow_flag;
 
+    // constraints for random stimulus
+    constraint counter_constraints {
+        nRST dist {1 := 95, 0 := 5};
+        clear dist {0 := 90, 1 := 10};
+        count_enable dist {1 := 80, 0:= 20};
+        overflow_val inside {[1:(2**NUM_BITS)-1]};
+    }
+
     // register transaction fields with the UVM factory
     `uvm_object_utils_begin(transaction)
         `uvm_field_int(nRST, UVM_NOCOMPARE)

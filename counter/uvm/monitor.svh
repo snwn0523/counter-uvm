@@ -32,18 +32,24 @@ class monitor extends uvm_monitor;
             transaction tx;
 
             // sample after the DUT updates at the positive clock edge
-            @(negedge vif.clk);
+            @(posedge vif.clk);
 
             tx = transaction#(4)::type_id::create("tx");
 
+            // capture inputs used by the DUT
             tx.nRST = vif.nRST;
             tx.clear = vif.clear;
             tx.count_enable = vif.count_enable;
             tx.overflow_val = vif.overflow_val;
 
+            // wait for DUT nonblocking assignments to complete
+            #1ns;
+
+            // capture updated DUT outputs
             tx.count_out = vif.count_out;
             tx.overflow_flag = vif.overflow_flag;
 
+            // send transaction to scoreboard
             result_ap.write(tx);
         end
 

@@ -27,7 +27,7 @@ run: build
 	-coverage \
 	+UVM_TESTNAME="$(TESTNAME)" \
 	+UVM_VERBOSITY=$(VERBOSITY) \
-	-do "run -all" &
+	-do "run -all; quit -f" 
 
 run_gui: build
 	@echo "Running simulation in GUI mode..."

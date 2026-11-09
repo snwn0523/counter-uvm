@@ -28,10 +28,15 @@ class driver extends uvm_driver#(transaction);
         transaction req_item;
 
         //Inital values
-        vif.nRST = 1'b1;
+        vif.nRST = 1'b0;
         vif.clear = 1'b0;
         vif.count_enable = 1'b0;
-        vif.overflow_val = '0;
+        vif.overflow_val = 4'd15;
+
+        repeat(2) @(posedge vif.clk);
+
+        @(negedge vif.clk);
+        vif.nRST = 1'b1;
 
         forever begin
             seq_item_port.get_next_item(req_item);
