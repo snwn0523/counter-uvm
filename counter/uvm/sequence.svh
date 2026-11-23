@@ -10,10 +10,12 @@ class counter_sequence extends uvm_sequence#(transaction);
         super.new(name);
     endfunction: new
 
+    int num_transaction = 25;
+
     task body();
         transaction req_item;
 
-        repeat(25) begin
+        repeat(num_transaction) begin
             req_item = transaction#(4)::type_id::create("req_item");
 
             start_item(req_item);
@@ -35,62 +37,36 @@ class counter_sequence extends uvm_sequence#(transaction);
             finish_item(req_item);
         end
 
-        // // create a transaction object
-        // req_item = transaction#(4)::type_id::create("req_item");
-        
-        // // 1.1 Reset Behavior
-        // repeat(2) begin
-        //     start_item(req_item);
-        //     req_item.nRST = 0;
-        //     req_item.clear = 0;
-        //     req_item.count_enable = 0;
-        //     req_item.overflow_val = 4'd15;
-        //     finish_item(req_item);
-        // end
+        // Directed transaction to close clear_on x disabled coverage bin
+        req_item = transaction#(4)::type_id::create("directed_clear_disabled");
+        start_item(req_item);
 
-        // // Release reset
-        // start_item(req_item);
-        // req_item.nRST = 1;
-        // req_item.clear = 0;
-        // req_item.count_enable = 0;
-        // req_item.overflow_val = 4'd15;
-        // finish_item(req_item);
+        req_item.nRST        = 1'b1;
+        req_item.clear       = 1'b1;
+        req_item.count_enable = 1'b0;
+        req_item.overflow_val = 4'd15;
 
-        // // 2.1 Basic Counting
-        // repeat(5) begin
-        //     start_item(req_item);
-        //     req_item.nRST = 1;
-        //     req_item.clear = 0;
-        //     req_item.count_enable = 1;
-        //     req_item.overflow_val = 4'd15;
-        //     finish_item(req_item);
-        // end
+        `uvm_info("Sequence",
+            $sformatf(
+                "Directed: nRST=%0b clear=%0b enable=%0b overflow_val=%0d",
+                req_item.nRST,
+                req_item.clear,
+                req_item.count_enable,
+                req_item.overflow_val
+            ),
+            UVM_LOW)
 
-        // // 2.2 Count Hold
-        // repeat(3) begin
-        //     start_item(req_item);
-        //     req_item.nRST = 1;
-        //     req_item.clear = 0;
-        //     req_item.count_enable = 0;
-        //     req_item.overflow_val = 4'd15;
-        //     finish_item(req_item);
-        // end
+        finish_item(req_item);
 
-        // // 3.1 Synchronus Clear
-        //     start_item(req_item);
-        //     req_item.nRST = 1;
-        //     req_item.clear = 1;
-        //     req_item.count_enable = 0;
-        //     req_item.overflow_val = 4'd15;
-        //     finish_item(req_item);
 
-        // // Verify clear output on the following cycle
-        //     start_item(req_item);
-        //     req_item.nRST = 1;
-        //     req_item.clear = 0;
-        //     req_item.count_enable = 0;
-        //     req_item.overflow_val = 4'd15;
-        //     finish_item(req_item);
+        `uvm_info(
+            "Sequence",
+            $sformatf(
+                "Generated %0d randomized transactions",
+                num_transaction
+            ),
+            UVM_LOW
+        )
     endtask: body
 
 endclass: counter_sequence

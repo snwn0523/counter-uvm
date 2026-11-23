@@ -8,18 +8,27 @@ class scoreboard extends uvm_scoreboard;
 
     uvm_analysis_imp#(transaction, scoreboard) analysis_export;
 
-    bit [3:0] expected_count;
-    bit expected_overflow;
+    int cycle_checks;
     int m_matches;
-    int m_mismatches;
+    int mismatches;
+
+    int reset_checks;
+    int clear_checks;
+    int hold_checks;
+    int count_checks;
+    // int rollover_checks;
 
     function new(string name, uvm_component parent);
         super.new(name, parent);
 
-        expected_count = 0;
-        expected_overflow = 0;
+        cycle_checks = 0;
         m_matches = 0;
-        m_mismatches = 0;
+        mismatches = 0;
+
+        reset_checks = 0;
+        clear_checks = 0;
+        hold_checks = 0;
+        count_checks = 0;
     endfunction: new
 
     function void build_phase(uvm_phase phase);
@@ -30,32 +39,25 @@ class scoreboard extends uvm_scoreboard;
 
     // compare the expected count with the DUT output
     function void write(transaction tx);
-        // calculate expected output based on counter RTL
-        if (!tx.nRST) begin
-            expected_count = 0;
-            expected_overflow = 0;
-        end
-        else begin
-            // synchronous clear has priority
-            if (tx.clear) begin
-                expected_count = 0;
-            end
-            else if (tx.count_enable) begin
-                // rollover behavior
-                if ((int'(expected_count) + 1) > int'(tx.overflow_val)) begin
-                    expected_count = 1;
-                end
-                else begin
-                    expected_count = expected_count + 1;
-                end
-            end
 
-            // overflow flag follows the next count value
-            expected_overflow = (expected_count == tx.overflow_val);
-        end
+        cycle_checks++;
+
+        // track what functionality was checked
+        if (!tx.nRST)
+            reset_checks++;
+        else if (tx.clear)
+            clear_checks++;
+        else if (!tx.count_enable)
+            hold_checks++;
+        else
+            count_checks++;
+
+        // // rollover condition
+        // if (tx.nRST && !tx.clear && tx.count_enable && (tx.expected_count == 1) && (tx.count_out == 1))
+        //     rollover_checks++;
         
-        // compare expected and actual outputs
-        if ((tx.count_out == expected_count) && (tx.overflow_flag == expected_overflow)) begin
+        // compare predictor result against DUT result
+        if ((tx.count_out == tx.expected_count) && (tx.overflow_flag == tx.expected_overflow)) begin
 
             m_matches++;
 
@@ -63,9 +65,9 @@ class scoreboard extends uvm_scoreboard;
                 "Scoreboard",
                 $sformatf(
                 "PASS: count expected=%0d actual=%0d | overflow expected=%0b actual=%0b",
-                expected_count,
+                tx.expected_count,
                 tx.count_out,
-                expected_overflow,
+                tx.expected_overflow,
                 tx.overflow_flag
                 ),
                 UVM_LOW
@@ -73,35 +75,20 @@ class scoreboard extends uvm_scoreboard;
         end
         else begin
 
-            m_mismatches++;
+            mismatches++;
 
             `uvm_error(
                 "Scoreboard",
                 $sformatf(
                 "FAIL: count expected=%0d actual=%0d | overflow expected=%0b actual=%0b",
-                expected_count,
+                tx.expected_count,
                 tx.count_out,
-                expected_overflow,
+                tx.expected_overflow,
                 tx.overflow_flag
                 )
             )
         end
         
-        // // Reset behavior
-        // if (!tx.nRST) begin
-        //     expected_count = 0;
-        //     expected_overflow = 0;
-        // end
-        // // Synchronous clear
-        // else if (tx.clear) begin
-        //     expected_count = 0;
-        //     expected_overflow = 0;
-        // end
-        // // basic counting
-        // else if (tx.count_enable) begin
-        //     expected_count = expected_count + 1;
-        // end
-
     endfunction: write
 
     function void report_phase(uvm_phase phase);
@@ -110,9 +97,14 @@ class scoreboard extends uvm_scoreboard;
         `uvm_info(
         "Scoreboard",
         $sformatf(
-            "Matches: %0d, Mismatches: %0d",
+            {"Cycle Checks=%0d Matches=%0d Mismatches=%0d | ", "Reset=%0d Clear=%0d Hold=%0d Count=%0d"},
+            cycle_checks,
             m_matches,
-            m_mismatches
+            mismatches,
+            reset_checks,
+            clear_checks,
+            hold_checks,
+            count_checks
         ),
         UVM_LOW
         )

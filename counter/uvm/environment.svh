@@ -1,14 +1,19 @@
 import uvm_pkg::*;
 `include "uvm_macros.svh"
 `include "agent.svh"
+`include "predictor.svh"
 `include "scoreboard.svh"
+`include "counter_coverage.svh"
 
 // environment contains and connects the main UVM components
 class environment extends uvm_env;
     `uvm_component_utils(environment)
 
     agent agt;
+    predictor pred;
     scoreboard sb;
+
+    counter_coverage cov;
 
     function new(string name = "env", uvm_component parent = null);
         super.new(name, parent);
@@ -19,12 +24,16 @@ class environment extends uvm_env;
         super.build_phase(phase);
 
         agt = agent::type_id::create("agt", this);
+        pred = predictor::type_id::create("pred", this);
         sb  = scoreboard::type_id::create("sb", this);
+
+        cov = counter_coverage::type_id::create("cov", this);
     endfunction
 
     // connect the monitor output to the scoreboard
     function void connect_phase(uvm_phase phase);
-        agt.mon.result_ap.connect(sb.analysis_export);
+        agt.mon.result_ap.connect(pred.analysis_export);
+        pred.predicted_ap.connect(sb.analysis_export);
     endfunction
 
 endclass: environment

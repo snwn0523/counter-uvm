@@ -12,9 +12,14 @@ class transaction #(parameter NUM_BITS = 4) extends uvm_sequence_item;
     rand bit clear;
     rand bit count_enable;
     rand bit [NUM_BITS-1:0] overflow_val;
+
     // output fields observed from the DUT
     bit [NUM_BITS-1:0] count_out;
     bit overflow_flag;
+
+    // predictor outpus
+    bit [NUM_BITS-1:0] expected_count;
+    bit expected_overflow;
 
     // constraints for random stimulus
     constraint counter_constraints {
@@ -33,6 +38,9 @@ class transaction #(parameter NUM_BITS = 4) extends uvm_sequence_item;
 
         `uvm_field_int(count_out, UVM_DEFAULT)
         `uvm_field_int(overflow_flag, UVM_DEFAULT)
+
+        `uvm_field_int(expected_count, UVM_DEFAULT)
+        `uvm_field_int(expected_overflow, UVM_DEFAULT)
     `uvm_object_utils_end
 
     function new(string name = "transaction");

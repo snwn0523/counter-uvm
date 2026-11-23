@@ -21,13 +21,26 @@ build:
 	-logfile tb_compile.log \
 	-printinfilenames=file_search.log
 
+RESULTS=results
+
 run: build
+	mkdir -p $(RESULTS)
 	vsim -c $(TBTOP) \
 	-voptargs=+acc \
 	-coverage \
+	-wlf $(RESULTS)/$(TESTNAME).wlf \
+	-l $(RESULTS)/$(TESTNAME).log \
 	+UVM_TESTNAME="$(TESTNAME)" \
 	+UVM_VERBOSITY=$(VERBOSITY) \
-	-do "run -all; quit -f" 
+	-do "log -r /*; coverage save -onexit $(RESULTS)/$(TESTNAME).ucdb; run -all; quit -f"
+
+coverage:
+	vcover report \
+	-details \
+	-codeAll \
+	-cvg \
+	-output $(RESULTS)/$(TESTNAME)_coverage.txt \
+	$(RESULTS)/$(TESTNAME).ucdb
 
 run_gui: build
 	@echo "Running simulation in GUI mode..."
@@ -40,10 +53,11 @@ run_gui: build
 clean:
 	@echo "Cleaning up..."
 	rm -rf work
+	rm -rf results
 	rm -f wlf*
 	rm -f transcript
 	rm -f *.log
 	rm -f *.vstf
 	rm -f *.wlf
 
-.PHONY: build run run_gui clean all
+.PHONY: build run run_gui coverage clean all

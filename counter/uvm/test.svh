@@ -23,12 +23,21 @@ class test extends uvm_test;
 
         // get virtual interface from tb_counter
         if (!uvm_config_db#(virtual counter_if)::get(
-            this, "", "counter_vif", vif)) begin
-        `uvm_fatal("Test", "No virtual interface specified for this test instance")
+            this,
+            "",
+            "counter_vif",
+            vif
+        )) begin
+            `uvm_fatal("Test", "No virtual interface specified for this test instance")
         end
 
-        // send interface down to agent components
-        uvm_config_db#(virtual counter_if)::set(this, "env.agt*", "counter_vif", vif);
+        // send interface down to all environment components
+        uvm_config_db#(virtual counter_if)::set(
+            this,
+            "env.*",
+            "counter_vif",
+            vif
+        );
 
     endfunction: build_phase
 
